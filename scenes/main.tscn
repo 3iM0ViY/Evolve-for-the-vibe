@@ -1,8 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://bkp8sx81d38gb"]
+[gd_scene load_steps=3 format=3 uid="uid://bkp8sx81d38gb"]
 
 [ext_resource type="PackedScene" uid="uid://dt3oqysv12jd6" path="res://scenes/player.tscn" id="1_o5qli"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o5qli"]
 
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 position = Vector2(681, 182)
+accelaration = 0.5
+decelaration = 0.5
+jump_decelaration_on_release = 0.3
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(635, 521)
+shape = SubResource("WorldBoundaryShape2D_o5qli")
