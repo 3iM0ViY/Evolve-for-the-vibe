@@ -1,13 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkp8sx81d38gb"]
+[gd_scene load_steps=7 format=3 uid="uid://bkp8sx81d38gb"]
 
 [ext_resource type="PackedScene" uid="uid://dt3oqysv12jd6" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cmgnlq8accllq" path="res://assets/sprites/tiles/brick.png" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://bep36naiangip" path="res://assets/sprites/tiles/platform.png" id="2_sugp2"]
 
+[sub_resource type="Curve" id="Curve_sugp2"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7948304, 0.7163915), -1.5250804, -1.5250804, 0, 0, Vector2(0.9628433, 0.5247641), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o5qli"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sugp2"]
-size = Vector2(85, 76)
+size = Vector2(85, 155)
 
 [node name="Main" type="Node2D"]
 
@@ -16,6 +20,7 @@ position = Vector2(681, 182)
 accelaration = 0.5
 decelaration = 0.5
 jump_decelaration_on_release = 0.3
+dash_curve = SubResource("Curve_sugp2")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(1.5, 1.5)
@@ -39,10 +44,10 @@ texture = ExtResource("2_sugp2")
 [node name="Wall" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
-position = Vector2(847.5, 489)
+position = Vector2(847.5, 449.5)
 shape = SubResource("RectangleShape2D_sugp2")
 
 [node name="Sprite2D" type="Sprite2D" parent="Wall"]
-position = Vector2(846, 489.00003)
-scale = Vector2(0.70312476, 0.6249999)
+position = Vector2(846, 449.5)
+scale = Vector2(0.70312476, 1.2421877)
 texture = ExtResource("2_0wfyh")

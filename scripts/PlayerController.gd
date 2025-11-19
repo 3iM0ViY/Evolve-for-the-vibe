@@ -6,9 +6,19 @@ extends CharacterBody2D
 @export_range(0, 1) var accelaration = 0.1 #інерція під час руху
 @export_range(0, 1) var decelaration = 0.1 
 
-@export var jump_strength = -800
+@export var jump_strength = -600
 @export_range(0, 1) var jump_decelaration_on_release = 0.1
-const JUMP_VELOCITY = -400.0
+
+@export var dash_speed = 1000.0
+@export var dash_max_distance = 300
+@export var dash_curve : Curve
+@export var dash_cooldown = 1.0
+
+var is_in_dash = false
+var dash_start_position = 0
+var dash_direction = 0
+var dash_timer = 0
+
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -18,7 +28,7 @@ func _physics_process(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor(): #бінди знаходяться в налаштуваннях проєкту => input map
-		velocity.y = JUMP_VELOCITY
+		velocity.y = jump_strength
 	
 	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y *= jump_decelaration_on_release #коротший стрибок, якщо не затискати пробіл
@@ -36,5 +46,23 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, direction * speed, speed * accelaration) #інерція під час руху
 	else:
 		velocity.x = move_toward(velocity.x, 0, walk_speed * decelaration) #інерція під час руху
-
+	
+	# Dashing
+	if Input.is_action_just_pressed("dash") and direction and not is_in_dash and dash_timer <= 0:
+		is_in_dash = true
+		dash_start_position = position.x
+		dash_direction = direction
+		dash_timer = dash_cooldown
+	
+	if is_in_dash:
+		var current_distance = abs(position.x - dash_start_position)
+		if current_distance >= dash_max_distance or is_on_wall():
+			is_in_dash = false
+		else:
+			velocity.x = direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance) #деш, прив'язаний до кривої з інспектора
+			velocity.y = 0 #щоб не падати в моменті (луні тюнс момент)
+	
+	if dash_timer > 0:
+		dash_timer -= delta #час рахуєтсья в кадрах
+	
 	move_and_slide()
