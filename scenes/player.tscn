@@ -1,13 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=11 format=3 uid="uid://dt3oqysv12jd6"]
 
-[ext_resource type="Script" uid="uid://b7x2ibq1x14ob" path="res://scripts/PlayerController.gd" id="1_bl13t"]
-[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/sprites/dino.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/player/dino.png" id="1_errlg"]
+[ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]
+[ext_resource type="Script" uid="uid://c6inggg2oj3a6" path="res://assets/player/states/state_manager.gd" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://863arsgvcorh" path="res://assets/player/states/idle.gd" id="4_tuyoq"]
+[ext_resource type="Script" uid="uid://dk7kgblrpiu0t" path="res://assets/player/states/run.gd" id="5_fjrip"]
+[ext_resource type="Script" uid="uid://c6o4mswf7vq8h" path="res://assets/player/states/jump.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://bdosiveihgyn5" path="res://assets/player/states/fall.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://ordbjrmo2xhl" path="res://assets/player/states/walk.gd" id="8_smehm"]
+[ext_resource type="Script" uid="uid://dw588y451a4io" path="res://assets/player/states/dash.gd" id="9_ur7pv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bl13t"]
 size = Vector2(51, 95)
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_bl13t")
+script = ExtResource("1_qlg0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.5, 8.5)
@@ -16,3 +23,49 @@ shape = SubResource("RectangleShape2D_bl13t")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("1_errlg")
+
+[node name="State_manager" type="Node" parent="."]
+script = ExtResource("3_qhqgy")
+starting_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="State_manager"]
+script = ExtResource("4_tuyoq")
+jump_node = NodePath("../jump")
+fall_node = NodePath("../fall")
+walk_node = NodePath("../walk")
+run_node = NodePath("../run")
+dash_node = NodePath("../dash")
+
+[node name="run" type="Node" parent="State_manager"]
+script = ExtResource("5_fjrip")
+jump_node = NodePath("../jump")
+fall_node = NodePath("../fall")
+dash_node = NodePath("../dash")
+idle_node = NodePath("../idle")
+walk_node = NodePath("../walk")
+run_node = NodePath(".")
+
+[node name="jump" type="Node" parent="State_manager"]
+script = ExtResource("6_tuyoq")
+fall_node = NodePath("../fall")
+run_node = NodePath("../run")
+walk_node = NodePath("../walk")
+idle_node = NodePath("../idle")
+
+[node name="fall" type="Node" parent="State_manager"]
+script = ExtResource("7_fjrip")
+run_node = NodePath("../run")
+walk_node = NodePath("../walk")
+idle_node = NodePath("../idle")
+
+[node name="walk" type="Node" parent="State_manager"]
+script = ExtResource("8_smehm")
+jump_node = NodePath("../jump")
+fall_node = NodePath("../fall")
+dash_node = NodePath("../dash")
+idle_node = NodePath("../idle")
+walk_node = NodePath(".")
+run_node = NodePath("../run")
+
+[node name="dash" type="Node" parent="State_manager"]
+script = ExtResource("9_ur7pv")
