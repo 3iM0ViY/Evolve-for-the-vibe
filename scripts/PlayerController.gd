@@ -24,6 +24,9 @@ var dash_timer = 0
 @export var coyote_time = 0.1
 var coyote_timer: float = 0
 
+@onready var animated_sprite = $AnimatedSprite2D
+var last_direction = 1.0
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -65,6 +68,19 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, direction * speed, speed * accelaration) #інерція під час руху
 	else:
 		velocity.x = move_toward(velocity.x, 0, walk_speed * decelaration) #інерція під час руху
+	
+	# --- Animation
+	if Input.is_action_pressed("move left") or Input.is_action_pressed("move right"):
+		if direction != last_direction:
+			last_direction = direction
+			print(last_direction)
+	if direction == 0:
+		if last_direction > 0:
+			animated_sprite.play("idle_right")
+		else:
+			animated_sprite.play("idle_left")
+	else:
+		animated_sprite.pause()
 	
 	# Dashing
 	if Input.is_action_just_pressed("dash") and direction and not is_in_dash and dash_timer <= 0:

@@ -16,7 +16,7 @@ size = Vector2(85, 155)
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(681, 182)
+position = Vector2(633, 323)
 accelaration = 0.5
 decelaration = 0.5
 jump_decelaration_on_release = 0.3

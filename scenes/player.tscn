@@ -1,21 +1,116 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=14 format=3 uid="uid://dt3oqysv12jd6"]
 
 [ext_resource type="Script" uid="uid://b7x2ibq1x14ob" path="res://scripts/PlayerController.gd" id="1_bl13t"]
-[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/sprites/dino.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/sprites/dino/dino.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://drar2uc8nmgap" path="res://assets/sprites/dino/dino1.png" id="3_dqkch"]
+[ext_resource type="Texture2D" uid="uid://c21tiuftvv88j" path="res://assets/sprites/dino/dino-4.png" id="3_fjrip"]
+[ext_resource type="Texture2D" uid="uid://ddd8qh6pcfvvj" path="res://assets/sprites/dino/dino2.png" id="4_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://cohxf5ynpuwgr" path="res://assets/sprites/dino/dino-5.png" id="4_smehm"]
+[ext_resource type="Texture2D" uid="uid://d0nc2dkbolddt" path="res://assets/sprites/dino/dino-6.png" id="5_ur7pv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 21.0
 height = 96.0
 
+[sub_resource type="Animation" id="Animation_qhqgy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_g2els"]
+resource_name = "idle_right"
+length = 0.8
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_fjrip"]
+resource_name = "idle_left"
+length = 0.8
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qhqgy"]
+_data = {
+&"RESET": SubResource("Animation_qhqgy"),
+&"idle_left": SubResource("Animation_fjrip"),
+&"idle_right": SubResource("Animation_g2els")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_fjrip")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_smehm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ur7pv")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_errlg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_dqkch")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qlg0r")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 2.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
+position = Vector2(0, -64)
 script = ExtResource("1_bl13t")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 9)
+position = Vector2(0, 16)
 shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 texture_filter = 1
+position = Vector2(0, 6)
 texture = ExtResource("1_errlg")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -25,3 +120,13 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qhqgy")
+}
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, 6)
+sprite_frames = SubResource("SpriteFrames_dqkch")
+animation = &"idle_right"
