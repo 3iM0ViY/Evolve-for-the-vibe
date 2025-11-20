@@ -8,6 +8,8 @@ extends CharacterBody2D
 
 @export var jump_strength = -600
 @export_range(0, 1) var jump_decelaration_on_release = 0.1
+@export var jump_buffer_time = 0.1 #на стрибок є невеличкий буфер якщо користувач натиснув ще в повітрі
+var jump_buffer_timer: float = 0.1
 
 @export var dash_speed = 1000.0
 @export var dash_max_distance = 300
@@ -19,6 +21,8 @@ var dash_start_position = 0
 var dash_direction = 0
 var dash_timer = 0
 
+@export var coyote_time = 0.1
+var coyote_timer: float = 0
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -26,13 +30,28 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta #можна змінити в налаштуваннях проєкту => physics => 2d
 		#velocity += Vector2(0, 9.81)
 
-	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor(): #бінди знаходяться в налаштуваннях проєкту => input map
-		velocity.y = jump_strength
+	# --- Handle jump.
+	if Input.is_action_just_pressed("jump"):
+		jump_buffer_timer = jump_buffer_time
+	if jump_buffer_timer > 0:
+		jump_buffer_timer -= delta
 	
-	if Input.is_action_just_released("jump") and velocity.y < 0:
+	# Coyote time
+	if is_on_floor():
+		coyote_timer = coyote_time
+	else:
+		if coyote_timer > 0:
+			coyote_timer -= delta
+	
+	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0): #на стрибок є невеличкий буфер якщо користувач натиснув в повітрі
+		velocity.y = jump_strength
+		jump_buffer_timer = 0
+		coyote_timer = 0
+	
+	if Input.is_action_just_released("jump") and velocity.y < 0: #бінди знаходяться в налаштуваннях проєкту => input map
 		velocity.y *= jump_decelaration_on_release #коротший стрибок, якщо не затискати пробіл
 	
+	# --- Handle sprint
 	var speed
 	if Input.is_action_pressed("sprint"):
 		speed = sprint
