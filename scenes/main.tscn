@@ -1,12 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkp8sx81d38gb"]
+[gd_scene load_steps=6 format=3 uid="uid://bkp8sx81d38gb"]
 
-[ext_resource type="PackedScene" uid="uid://dt3oqysv12jd6" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cmgnlq8accllq" path="res://assets/sprites/tiles/brick.png" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://bep36naiangip" path="res://assets/sprites/tiles/platform.png" id="2_sugp2"]
-
-[sub_resource type="Curve" id="Curve_sugp2"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.7948304, 0.7163915), -1.5250804, -1.5250804, 0, 0, Vector2(0.9628433, 0.5247641), 0.0, 0.0, 0, 0]
-point_count = 3
+[ext_resource type="PackedScene" uid="uid://dkxpl5mbjx1og" path="res://scenes/player1.tscn" id="3_sugp2"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o5qli"]
 
@@ -14,21 +10,6 @@ point_count = 3
 size = Vector2(85, 155)
 
 [node name="Main" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(681, 182)
-accelaration = 0.5
-decelaration = 0.5
-jump_decelaration_on_release = 0.3
-dash_curve = SubResource("Curve_sugp2")
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(1.5, 1.5)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
 
 [node name="Floor" type="StaticBody2D" parent="."]
 
@@ -51,3 +32,15 @@ shape = SubResource("RectangleShape2D_sugp2")
 position = Vector2(846, 449.5)
 scale = Vector2(0.70312476, 1.2421877)
 texture = ExtResource("2_0wfyh")
+
+[node name="Player2" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(570, 184)
+
+[node name="Camera2D" type="Camera2D" parent="Player2"]
+position = Vector2(111, -2)
+zoom = Vector2(1.5, 1.5)
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=8 format=3 uid="uid://dkxpl5mbjx1og"]
 
 [ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/player/dino.png" id="1_errlg"]
 [ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]

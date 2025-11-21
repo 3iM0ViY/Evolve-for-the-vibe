@@ -1,39 +1,38 @@
 extends Node
+class_name StateManager
 
-@export var starting_state: NodePath
+@export var initial_state: BaseState
+var current_state: BaseState 
+var states: Dictionary = {}
 
-var current_state: BaseState
-
-func change_state(new_state: BaseState) -> void:
-	if current_state:
-		current_state.exit()
-
-	current_state = new_state
-	current_state.enter()
-
-# Initialize the state machine by giving each state a reference to the objects
-# owned by the parent that they should be able to take control of
-# and set a default state
-func init(player: Player) -> void:
+func _ready() -> void:
+	#register child states
 	for child in get_children():
-		child.player = player
-
-	# Initialize with a default state of idle
-	change_state(get_node(starting_state))
+		if child is BaseState:
+			states[child.name.to_lower()] = child
+			child.state_manager = self
 	
-# Pass through functions for the Player to call,
-# handling state changes as needed
-func physics_process(delta: float) -> void:
-	var new_state = current_state.physics_process(delta)
-	if new_state:
-		change_state(new_state)
+	#start with initial state
+	if initial_state:
+		_change_state(initial_state.name.to_lower())
 
-func input(event: InputEvent) -> void:
-	var new_state = current_state.input(event)
-	if new_state:
-		change_state(new_state)
+func _process(delta: float) -> void:
+	if current_state:
+		current_state._update(delta)
 
-func process(delta: float) -> void:
-	var new_state = current_state.process(delta)
-	if new_state:
-		change_state(new_state)
+func _physics_process(delta: float) -> void:
+	if current_state:
+		current_state._physics_process(delta)
+
+func _input(event: InputEvent) -> void:
+	if current_state:
+		current_state._handle_input(event)
+
+func _change_state(new_state_name: String) -> void:
+	if current_state:
+		current_state._exit()
+	
+	current_state = states.get(new_state_name.to_lower())
+	
+	if current_state:
+		current_state._enter()
