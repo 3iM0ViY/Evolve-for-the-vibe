@@ -30,9 +30,12 @@ script = ExtResource("4_tuyoq")
 
 [node name="Walk" type="Node" parent="StateManager"]
 script = ExtResource("8_smehm")
+walk_speed = 150.0
 
 [node name="Jump" type="Node" parent="StateManager"]
 script = ExtResource("6_tuyoq")
+jump_strength = -500
+jump_decelaration_on_release = 0.45
 
 [node name="Sprint" type="Node" parent="StateManager"]
 

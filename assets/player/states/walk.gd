@@ -14,6 +14,9 @@ func _enter():
 func _physics_process(delta):
 	player = state_manager.get_parent()
 	
+	if Input.is_action_pressed("jump"):
+		state_manager._change_state($"../Jump")
+	
 	# --- Handle sprint
 	var speed
 	speed = walk_speed
@@ -25,10 +28,9 @@ func _physics_process(delta):
 		player.velocity.x = move_toward(player.velocity.x, direction * speed, speed * accelaration) #інерція під час руху
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, walk_speed * decelaration) #інерція під час руху
-		state_manager._change_state($"../Idle")
 	
 	player.move_and_slide()
 
 func _handle_input(event: InputEvent) -> void:
-	if Input.is_action_just_pressed("jump"):
-		state_manager._change_state($"../Jump")
+	if not Input.is_anything_pressed():
+		state_manager._change_state($"../Idle")
