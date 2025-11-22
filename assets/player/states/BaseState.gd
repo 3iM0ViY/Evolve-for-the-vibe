@@ -2,6 +2,7 @@ class_name BaseState
 extends Node
 
 var state_manager: StateManager
+var player: CharacterBody2D
 
 # Methods for children to override
 func _enter() -> void:
@@ -13,7 +14,7 @@ func _exit() -> void:
 func _update(delta: float) -> void:
 	pass
 
-func _physics_update(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	pass
 
 func _handle_input(event: InputEvent) -> void:
