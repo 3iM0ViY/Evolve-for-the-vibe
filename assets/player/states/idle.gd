@@ -5,9 +5,11 @@ class_name IdleState
 
 func _enter() -> void:
 	print("Entering IdleState")
+	pass
 
 func _exit() -> void:
-	print("exit IdleState")
+	#print("exit IdleState")
+	pass
 
 func _handle_input(event: InputEvent) -> void:
 	if Input.is_action_pressed("move left") or Input.is_action_pressed("move right"):

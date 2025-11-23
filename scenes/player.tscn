@@ -1,14 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=10 format=3 uid="uid://dt3oqysv12jd6"]
 
 [ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/player/dino.png" id="1_errlg"]
 [ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://c6inggg2oj3a6" path="res://assets/player/states/state_manager.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://deafh4cg6mhyv" path="res://assets/player/states/idle.gd" id="4_tuyoq"]
 [ext_resource type="Script" uid="uid://d0mvnf7ec6jxq" path="res://assets/player/states/jump.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://b4w0uqfxn2q7c" path="res://assets/player/states/dash.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://dugmw54gj0o21" path="res://assets/player/states/walk.gd" id="8_smehm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bl13t"]
 size = Vector2(51, 95)
+
+[sub_resource type="Curve" id="Curve_fjrip"]
+_data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78840125, 0.7477114), -1.3286802, -1.3286802, 0, 0, Vector2(0.95611286, 0.5382643), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_qlg0r")
@@ -31,12 +36,14 @@ script = ExtResource("4_tuyoq")
 [node name="Walk" type="Node" parent="StateManager"]
 script = ExtResource("8_smehm")
 walk_speed = 150.0
+sprint = 300.0
 
 [node name="Jump" type="Node" parent="StateManager"]
 script = ExtResource("6_tuyoq")
 jump_strength = -500
-jump_decelaration_on_release = 0.45
-
-[node name="Sprint" type="Node" parent="StateManager"]
+jump_decelaration_on_release = 0.2
 
 [node name="Dash" type="Node" parent="StateManager"]
+script = ExtResource("7_fjrip")
+dash_speed = 500.0
+dash_curve = SubResource("Curve_fjrip")

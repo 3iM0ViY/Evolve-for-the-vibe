@@ -32,8 +32,8 @@ func _change_state(new_state: BaseState) -> void:
 	if current_state:
 		current_state._exit()
 	
-	print(states)
-	print(new_state)
+	#print(states)
+	#print(new_state)
 	current_state = states[states.find(new_state)] # Обираєм ноду нового стану по індексу в списку станів
 	
 	if current_state:
