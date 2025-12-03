@@ -1,14 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=10 format=3 uid="uid://dt3oqysv12jd6"]
 
-[ext_resource type="Script" uid="uid://b7x2ibq1x14ob" path="res://scripts/PlayerController.gd" id="1_bl13t"]
-[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/sprites/dino.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/player/dino.png" id="1_errlg"]
+[ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]
+[ext_resource type="Script" uid="uid://c6inggg2oj3a6" path="res://assets/player/states/state_manager.gd" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://deafh4cg6mhyv" path="res://assets/player/states/idle.gd" id="4_tuyoq"]
+[ext_resource type="Script" uid="uid://d0mvnf7ec6jxq" path="res://assets/player/states/jump.gd" id="6_tuyoq"]
+[ext_resource type="Script" uid="uid://b4w0uqfxn2q7c" path="res://assets/player/states/dash.gd" id="7_fjrip"]
+[ext_resource type="Script" uid="uid://dugmw54gj0o21" path="res://assets/player/states/walk.gd" id="8_smehm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 21.0
 height = 96.0
 
+[sub_resource type="Curve" id="Curve_fjrip"]
+_data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78056425, 0.7929329), -1.3286802, -1.3286802, 0, 0, Vector2(0.98119116, 0.735811), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_bl13t")
+script = ExtResource("1_qlg0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 9)
@@ -18,10 +27,28 @@ shape = SubResource("CapsuleShape2D_g2els")
 texture_filter = 1
 texture = ExtResource("1_errlg")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
-process_callback = 0
-position_smoothing_enabled = true
-position_smoothing_speed = 10.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
+[node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_qhqgy")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateManager"]
+script = ExtResource("4_tuyoq")
+
+[node name="Walk" type="Node" parent="StateManager"]
+script = ExtResource("8_smehm")
+
+[node name="Jump" type="Node" parent="StateManager"]
+script = ExtResource("6_tuyoq")
+jump_decelaration_on_release = 0.2
+
+[node name="Dash" type="Node" parent="StateManager"]
+script = ExtResource("7_fjrip")
+dash_curve = SubResource("Curve_fjrip")
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -45.0
+offset_top = -82.0
+offset_right = 43.0
+offset_bottom = -59.0
+text = "Debug Text"
+horizontal_alignment = 1
