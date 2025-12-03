@@ -8,8 +8,10 @@ class_name WalkState
 @export_range(0, 1) var accelaration = 0.1 #інерція під час руху
 @export_range(0, 1) var decelaration = 0.1 
 
+@onready var debug_label = $"../../DebugLabel"
+
 func _enter():
-	#print("Enter WalkState")
+	debug_label.text = "Walk state"
 	player = state_manager.get_parent()
 
 func _physics_process(delta):
@@ -31,12 +33,9 @@ func _physics_process(delta):
 			player.velocity.x = move_toward(player.velocity.x, direction * speed, speed * accelaration) #інерція під час руху
 		else:
 			player.velocity.x = move_toward(player.velocity.x, 0, walk_speed * decelaration) #інерція під час руху
-		
-		if Input.is_action_just_pressed("dash"):
-			state_manager._change_state($"../Dash")
-		
-		player.move_and_slide()
 
 func _handle_input(event: InputEvent) -> void:
 	if not Input.is_anything_pressed():
 		state_manager._change_state($"../Idle")
+	if Input.is_action_just_pressed("dash"):
+		state_manager._change_state($"../Dash")

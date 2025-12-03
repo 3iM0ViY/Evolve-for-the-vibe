@@ -6,6 +6,7 @@ var player: CharacterBody2D
 
 # Methods for children to override
 func _enter() -> void:
+	player = state_manager.get_parent()
 	pass
 
 func _exit() -> void:

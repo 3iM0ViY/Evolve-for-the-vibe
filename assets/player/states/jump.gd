@@ -10,8 +10,10 @@ var jump_buffer_timer: float = 0.1
 @export_range(0, 1) var coyote_time = 0.1
 var coyote_timer: float = 0
 
+@onready var debug_label = $"../../DebugLabel"
+
 func _enter() -> void:
-	#print("Enter JumpState")
+	debug_label.text = "Jump state"
 	player = state_manager.get_parent()
 
 func _physics_process(delta: float) -> void:
@@ -36,13 +38,12 @@ func _physics_process(delta: float) -> void:
 		
 		if Input.is_action_just_released("jump") and player.velocity.y < 0: #бінди знаходяться в налаштуваннях проєкту => input map
 			player.velocity.y *= jump_decelaration_on_release #коротший стрибок, якщо не затискати пробіл
-		
-		if player.is_on_floor():
-			if Input.is_action_pressed("move left") or Input.is_action_pressed("move right"):
-				state_manager._change_state($"../Walk")
-			if not Input.is_anything_pressed():
-				state_manager._change_state($"../Idle")
 
 func _handle_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("dash"):
 		state_manager._change_state($"../Dash")
+	if player.is_on_floor():
+		if Input.is_action_pressed("move left") or Input.is_action_pressed("move right"):
+			state_manager._change_state($"../Walk")
+		if not Input.is_anything_pressed():
+			state_manager._change_state($"../Idle")

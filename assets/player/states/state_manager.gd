@@ -31,10 +31,17 @@ func _input(event: InputEvent) -> void:
 func _change_state(new_state: BaseState) -> void:
 	if current_state:
 		current_state._exit()
+	if new_state == current_state:
+		return
 	
-	#print(states)
-	#print(new_state)
-	current_state = states[states.find(new_state)] # Обираєм ноду нового стану по індексу в списку станів
+	if not new_state:
+		push_warning("Нема такого стану!")
+		return
 	
-	if current_state:
-		current_state._enter()
+	var index := states.find(new_state)
+	if index == -1:
+		push_error("Стан '%s' не збережено тут!" % new_state.name)
+		return
+	
+	current_state = states[index] # Обираєм ноду нового стану по індексу в списку станів
+	current_state._enter()

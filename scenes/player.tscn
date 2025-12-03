@@ -12,7 +12,7 @@
 size = Vector2(51, 95)
 
 [sub_resource type="Curve" id="Curve_fjrip"]
-_data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78840125, 0.7477114), -1.3286802, -1.3286802, 0, 0, Vector2(0.95611286, 0.5382643), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78056425, 0.7929329), -1.3286802, -1.3286802, 0, 0, Vector2(0.98119116, 0.735811), 0.0, 0.0, 0, 0]
 point_count = 3
 
 [node name="Player" type="CharacterBody2D"]
@@ -35,15 +35,19 @@ script = ExtResource("4_tuyoq")
 
 [node name="Walk" type="Node" parent="StateManager"]
 script = ExtResource("8_smehm")
-walk_speed = 150.0
-sprint = 300.0
 
 [node name="Jump" type="Node" parent="StateManager"]
 script = ExtResource("6_tuyoq")
-jump_strength = -500
 jump_decelaration_on_release = 0.2
 
 [node name="Dash" type="Node" parent="StateManager"]
 script = ExtResource("7_fjrip")
-dash_speed = 500.0
 dash_curve = SubResource("Curve_fjrip")
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -45.0
+offset_top = -82.0
+offset_right = 43.0
+offset_bottom = -59.0
+text = "Debug Text"
+horizontal_alignment = 1

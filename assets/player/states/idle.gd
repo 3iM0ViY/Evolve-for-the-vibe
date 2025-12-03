@@ -3,8 +3,10 @@ extends BaseState
 
 class_name IdleState
 
+@onready var debug_label = $"../../DebugLabel"
+
 func _enter() -> void:
-	print("Entering IdleState")
+	debug_label.text = "Idle state"
 	pass
 
 func _exit() -> void:
