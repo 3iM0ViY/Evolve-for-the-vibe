@@ -25,25 +25,24 @@ func _physics_process(delta: float) -> void:
 			jump_buffer_timer -= delta
 		
 		# Coyote time
-		if player.is_on_floor():
+		var grounded = player.is_on_ground()
+		if grounded:
 			coyote_timer = coyote_time
 		else:
 			if coyote_timer > 0:
 				coyote_timer -= delta
 		
-		if jump_buffer_timer > 0 and (player.is_on_floor() or coyote_timer > 0): #на стрибок є невеличкий буфер якщо користувач натиснув в повітрі
+		if jump_buffer_timer > 0 and (grounded or coyote_timer > 0): #на стрибок є невеличкий буфер якщо користувач натиснув в повітрі
 			player.velocity.y = jump_strength
 			jump_buffer_timer = 0
 			coyote_timer = 0
 		
 		if Input.is_action_just_released("jump") and player.velocity.y < 0: #бінди знаходяться в налаштуваннях проєкту => input map
-			player.velocity.y *= jump_decelaration_on_release #коротший стрибок, якщо не затискати пробіл
+			player.velocity.y *= lerp(1.0, 0.0, jump_decelaration_on_release) #коротший стрибок, якщо не затискати пробіл
+		
+		if player.velocity.y > 0:
+			state_manager._change_state($"../Fall")
 
 func _handle_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("dash"):
 		state_manager._change_state($"../Dash")
-	if player.is_on_floor():
-		if Input.is_action_pressed("move left") or Input.is_action_pressed("move right"):
-			state_manager._change_state($"../Walk")
-		if not Input.is_anything_pressed():
-			state_manager._change_state($"../Idle")

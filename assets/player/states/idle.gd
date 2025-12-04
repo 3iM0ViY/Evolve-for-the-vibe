@@ -7,10 +7,11 @@ class_name IdleState
 @onready var animated_sprite = $"../../AnimatedSprite2D"
 
 @export var idle_buffer_time = 1.0
+var idle_buffer_timer: float
 
 func _enter() -> void:
 	debug_label.text = "Idle state"
-	idle_buffer_time = 1.0
+	idle_buffer_timer = idle_buffer_time
 	pass
 
 func _exit() -> void:
@@ -24,8 +25,8 @@ func _handle_input(event: InputEvent) -> void:
 		state_manager._change_state($"../Jump")
 
 func _update(delta: float) -> void:
-	if idle_buffer_time > 0: #анімація спокою запускається не одразу
-		idle_buffer_time -= delta
+	if idle_buffer_timer > 0: #анімація спокою запускається не одразу
+		idle_buffer_timer -= delta
 	else:
 		if animated_sprite:
 			animated_sprite.play("idle")

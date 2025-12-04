@@ -34,7 +34,7 @@ func _physics_process(delta: float) -> void:
 		
 		if is_in_dash:
 			var current_distance = abs(player.position.x - dash_start_position)
-			if current_distance >= dash_max_distance or player.is_on_wall():
+			if current_distance >= dash_max_distance or (player.is_touching_wall_left() or player.is_touching_wall_right()):
 				is_in_dash = false
 			else:
 				player.velocity.x = dash_direction * dash_speed * dash_curve.sample(current_distance / dash_max_distance) #деш, прив'язаний до кривої з інспектора
