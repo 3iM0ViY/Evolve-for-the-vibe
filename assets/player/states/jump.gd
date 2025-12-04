@@ -10,8 +10,6 @@ var jump_buffer_timer: float = 0.1
 @export_range(0, 1) var coyote_time = 0.1
 var coyote_timer: float = 0
 
-@onready var debug_label = $"../../DebugLabel"
-
 func _enter() -> void:
 	debug_label.text = "Jump state"
 	player = state_manager.get_parent()

@@ -12,8 +12,6 @@ var dash_start_position = 0
 var dash_direction = 0
 var dash_timer = 0
 
-@onready var debug_label = $"../../DebugLabel"
-
 # Called when the node enters the scene tree for the first time.
 func _enter() -> void:
 	debug_label.text = "Dash state"

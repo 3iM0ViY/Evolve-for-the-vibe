@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=20 format=3 uid="uid://dt3oqysv12jd6"]
 
 [ext_resource type="Texture2D" uid="uid://cm37s3liuov3j" path="res://assets/player/dino_right.png" id="1_errlg"]
 [ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]
@@ -7,8 +7,10 @@
 [ext_resource type="Script" uid="uid://d0mvnf7ec6jxq" path="res://assets/player/states/jump.gd" id="6_tuyoq"]
 [ext_resource type="Script" uid="uid://b4w0uqfxn2q7c" path="res://assets/player/states/dash.gd" id="7_fjrip"]
 [ext_resource type="Script" uid="uid://bmyn8da0icq7r" path="res://assets/player/states/fall.gd" id="7_ur7pv"]
+[ext_resource type="Script" uid="uid://beefxomswoygj" path="res://assets/player/states/dead.gd" id="8_d2wvv"]
 [ext_resource type="Script" uid="uid://dugmw54gj0o21" path="res://assets/player/states/walk.gd" id="8_smehm"]
 [ext_resource type="Script" uid="uid://be6fnf5topopw" path="res://assets/player/facing.gd" id="8_ur7pv"]
+[ext_resource type="Script" uid="uid://6k5krjrykfdv" path="res://assets/player/health.gd" id="10_y4r1p"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
 radius = 5.0
@@ -82,6 +84,9 @@ dash_curve = SubResource("Curve_fjrip")
 [node name="Fall" type="Node" parent="StateManager"]
 script = ExtResource("7_ur7pv")
 
+[node name="Dead" type="Node" parent="StateManager"]
+script = ExtResource("8_d2wvv")
+
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = -27.0
 offset_top = -26.0
@@ -109,3 +114,8 @@ target_position = Vector2(-10, 0)
 
 [node name="WallRight" type="RayCast2D" parent="Sensors"]
 target_position = Vector2(10, 0)
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("10_y4r1p")
+
+[connection signal="died" from="Health" to="." method="_on_health_died"]

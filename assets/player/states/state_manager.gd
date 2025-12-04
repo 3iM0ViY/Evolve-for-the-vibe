@@ -45,3 +45,4 @@ func _change_state(new_state: BaseState) -> void:
 	
 	current_state = states[index] # Обираєм ноду нового стану по індексу в списку станів
 	current_state._enter()
+	#current_state.debug_label.text = current_state.to_string()

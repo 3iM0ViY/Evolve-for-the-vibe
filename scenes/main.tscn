@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bkp8sx81d38gb"]
+[gd_scene load_steps=8 format=3 uid="uid://bkp8sx81d38gb"]
 
 [ext_resource type="PackedScene" uid="uid://dt3oqysv12jd6" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Texture2D" uid="uid://cmgnlq8accllq" path="res://assets/sprites/tiles/brick.png" id="2_0wfyh"]
 [ext_resource type="Texture2D" uid="uid://bep36naiangip" path="res://assets/sprites/tiles/platform.png" id="2_sugp2"]
+[ext_resource type="Texture2D" uid="uid://cu8ibrmevs3rg" path="res://assets/sprites/tiles/spike.png" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://dbddwj11tideo" path="res://scenes/main/spikes.gd" id="4_tbgi4"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_o5qli"]
 
@@ -44,3 +46,17 @@ position_smoothing_enabled = true
 position_smoothing_speed = 10.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="Spike" type="Sprite2D" parent="."]
+position = Vector2(327, 459)
+texture = ExtResource("4_jyhfs")
+
+[node name="spikes_area" type="Area2D" parent="Spike"]
+position = Vector2(-327, -459)
+script = ExtResource("4_tbgi4")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Spike/spikes_area"]
+position = Vector2(273, 518)
+polygon = PackedVector2Array(-3, 2, 22, -48, 41, -28, 68, -28, 85, -47, 113, 3)
+
+[connection signal="body_entered" from="Spike/spikes_area" to="Spike/spikes_area" method="_on_body_entered"]

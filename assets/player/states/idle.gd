@@ -3,7 +3,6 @@ extends BaseState
 
 class_name IdleState
 
-@onready var debug_label = $"../../DebugLabel"
 @onready var animated_sprite = $"../../AnimatedSprite2D"
 
 @export var idle_buffer_time = 1.0

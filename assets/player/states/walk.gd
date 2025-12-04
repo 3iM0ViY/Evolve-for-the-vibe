@@ -8,8 +8,6 @@ class_name WalkState
 @export_range(0, 1) var accelaration = 0.1 #інерція під час руху
 @export_range(0, 1) var decelaration = 0.1 
 
-@onready var debug_label = $"../../DebugLabel"
-
 func _enter():
 	debug_label.text = "Walk state"
 	player = state_manager.get_parent()

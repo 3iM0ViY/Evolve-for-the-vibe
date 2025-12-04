@@ -1,6 +1,8 @@
 class_name BaseState
 extends Node
 
+@onready var debug_label = $"../../DebugLabel"
+
 var state_manager: StateManager
 var player: CharacterBody2D
 
