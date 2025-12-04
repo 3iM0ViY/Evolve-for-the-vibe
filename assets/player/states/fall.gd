@@ -3,6 +3,8 @@ extends BaseState
 class_name FallState
 
 @export var max_fall_speed := 900.0
+@export var fall_damage_start_length := 800.0
+@export var fall_damage := 20
 
 func _enter() -> void:
 	debug_label.text = "Fall state"
@@ -12,6 +14,8 @@ func _physics_process(delta: float) -> void:
 	if player:
 		if player.velocity.y > max_fall_speed: #максимальна швидкість падіння
 			player.velocity.y = max_fall_speed
+		if player.velocity.y >= fall_damage_start_length and player.is_on_ground():
+			player.health.take_damage(fall_damage * 0.1 * (player.velocity.y - fall_damage_start_length))  # Fall damage
 
 func _handle_input(event: InputEvent) -> void:
 	if player.is_on_ground() or player.is_on_floor():

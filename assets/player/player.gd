@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 @onready var state_manager = $StateManager
 @onready var player = state_manager.get_parent()
 @onready var facing: Facing = $Facing #глобальна зміна напрямку руху персонажа

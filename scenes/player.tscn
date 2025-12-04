@@ -21,6 +21,7 @@ _data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78056425, 0.7929329), 
 point_count = 3
 
 [sub_resource type="SystemFont" id="SystemFont_smehm"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_smehm"]
 font = SubResource("SystemFont_smehm")
@@ -65,7 +66,7 @@ shape = SubResource("CapsuleShape2D_g2els")
 
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_qhqgy")
-initial_state = NodePath("Idle")
+initial_state = NodePath("Fall")
 
 [node name="Idle" type="Node" parent="StateManager"]
 script = ExtResource("4_tuyoq")
@@ -95,6 +96,7 @@ offset_bottom = -12.0
 text = "Debug Text"
 label_settings = SubResource("LabelSettings_smehm")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_y4r1p")
