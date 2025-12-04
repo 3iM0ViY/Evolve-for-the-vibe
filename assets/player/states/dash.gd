@@ -5,7 +5,7 @@ class_name DashState
 @export var dash_speed = 1000.0
 @export var dash_max_distance = 300
 @export var dash_curve : Curve
-@export var dash_cooldown = 1.0
+@export_range(0, 1) var dash_cooldown = 0.8
 
 var is_in_dash = false
 var dash_start_position = 0

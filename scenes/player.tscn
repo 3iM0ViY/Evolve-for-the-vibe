@@ -1,6 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://dt3oqysv12jd6"]
+[gd_scene load_steps=14 format=3 uid="uid://dt3oqysv12jd6"]
 
-[ext_resource type="Texture2D" uid="uid://dmw86apsddnw1" path="res://assets/player/dino.png" id="1_errlg"]
+[ext_resource type="Texture2D" uid="uid://cm37s3liuov3j" path="res://assets/player/dino_right.png" id="1_errlg"]
 [ext_resource type="Script" uid="uid://b0sdm36jrdww2" path="res://assets/player/player.gd" id="1_qlg0r"]
 [ext_resource type="Script" uid="uid://c6inggg2oj3a6" path="res://assets/player/states/state_manager.gd" id="3_qhqgy"]
 [ext_resource type="Script" uid="uid://deafh4cg6mhyv" path="res://assets/player/states/idle.gd" id="4_tuyoq"]
@@ -9,23 +9,48 @@
 [ext_resource type="Script" uid="uid://dugmw54gj0o21" path="res://assets/player/states/walk.gd" id="8_smehm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
-radius = 21.0
-height = 96.0
+radius = 17.0
+height = 42.0
 
 [sub_resource type="Curve" id="Curve_fjrip"]
 _data = [Vector2(0, 0.9357377), 0.0, 0.0, 0, 0, Vector2(0.78056425, 0.7929329), -1.3286802, -1.3286802, 0, 0, Vector2(0.98119116, 0.735811), 0.0, 0.0, 0, 0]
 point_count = 3
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("1_errlg")
+region = Rect2(0, 0, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("1_errlg")
+region = Rect2(16, 0, 16, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("1_errlg")
+region = Rect2(32, 0, 16, 15)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y4r1p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}]
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_qlg0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 9)
+position = Vector2(0, -22)
 shape = SubResource("CapsuleShape2D_g2els")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
-texture = ExtResource("1_errlg")
 
 [node name="StateManager" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("3_qhqgy")
@@ -46,9 +71,15 @@ script = ExtResource("7_fjrip")
 dash_curve = SubResource("Curve_fjrip")
 
 [node name="DebugLabel" type="Label" parent="."]
-offset_left = -45.0
-offset_top = -82.0
-offset_right = 43.0
-offset_bottom = -59.0
+offset_left = -44.0
+offset_top = -73.0
+offset_right = 44.0
+offset_bottom = -50.0
 text = "Debug Text"
 horizontal_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, -23.000002)
+scale = Vector2(3.0666666, 3.0666666)
+sprite_frames = SubResource("SpriteFrames_y4r1p")
+animation = &"idle"
