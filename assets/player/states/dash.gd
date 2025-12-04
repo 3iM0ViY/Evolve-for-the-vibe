@@ -24,12 +24,12 @@ func _enter() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	if player:
-		var direction := Input.get_axis("move left", "move right")
+		
 		# Dashing
-		if Input.is_action_just_pressed("dash") and direction and not is_in_dash and dash_timer <= 0:
+		if Input.is_action_just_pressed("dash") and player.facing.facing_dir and not is_in_dash and dash_timer <= 0:
 			is_in_dash = true
 			dash_start_position = player.position.x
-			dash_direction = direction
+			dash_direction = player.facing.facing_dir
 			dash_timer = dash_cooldown
 		
 		if is_in_dash:

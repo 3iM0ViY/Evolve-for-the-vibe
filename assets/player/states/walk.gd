@@ -29,6 +29,7 @@ func _physics_process(delta):
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
 		var direction := Input.get_axis("move left", "move right")
+		player.facing.update_facing(direction) #глобальний запис напрямку руху персонажа
 		if direction:
 			player.velocity.x = move_toward(player.velocity.x, direction * speed, speed * accelaration) #інерція під час руху
 		else:

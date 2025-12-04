@@ -35,6 +35,7 @@ texture = ExtResource("2_0wfyh")
 
 [node name="Player" parent="." instance=ExtResource("1_o5qli")]
 position = Vector2(620, 278)
+scale = Vector2(4, 4)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(1.5, 1.5)
