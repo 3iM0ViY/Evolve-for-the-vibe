@@ -4,6 +4,7 @@ class_name Health
 @export var max_hp: int = 100
 var current_hp: int
 
+@export var has_invincibility := true
 @export var invincibility_time = 1.0
 var is_invincible = false
 var invincibility_timer = 0.0
@@ -16,7 +17,7 @@ func _ready():
 	current_hp = max_hp
 
 func take_damage(amount: int):
-	if is_invincible:
+	if has_invincibility and is_invincible:
 		return
 	
 	current_hp -= amount
@@ -29,7 +30,7 @@ func take_damage(amount: int):
 		current_hp = 0
 		emit_signal("died")
 
-func _process(delta):
+func _physics_process(delta):
 	if is_invincible:
 		invincibility_timer -= delta
 		if invincibility_timer <= 0:

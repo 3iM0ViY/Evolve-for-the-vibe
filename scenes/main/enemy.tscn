@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bncgdqxks2j0r"]
+[gd_scene load_steps=7 format=3 uid="uid://bncgdqxks2j0r"]
 
 [ext_resource type="Texture2D" uid="uid://bq2ws1p516mww" path="res://icon.svg" id="1_l1lbi"]
 [ext_resource type="Script" uid="uid://mmbsjs3l30nu" path="res://scenes/main/enemy.gd" id="1_s007n"]
+[ext_resource type="Script" uid="uid://6k5krjrykfdv" path="res://assets/player/health.gd" id="3_5wnaa"]
+[ext_resource type="Script" uid="uid://d2ed47wgx72sn" path="res://scenes/main/enemy_health_bar.gd" id="4_0xiny"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s007n"]
 radius = 14.649954
@@ -31,5 +33,23 @@ position = Vector2(0, 2.5)
 scale = Vector2(5.660656, 3.9025598)
 shape = SubResource("CapsuleShape2D_l1lbi")
 
+[node name="DirectionTimer" type="Timer" parent="."]
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("3_5wnaa")
+max_hp = 80
+has_invincibility = false
+
+[node name="HealthBar" type="Node2D" parent="."]
+position = Vector2(0, -101)
+script = ExtResource("4_0xiny")
+
+[node name="ProgressBar" type="ProgressBar" parent="HealthBar"]
+offset_left = -53.0
+offset_right = 57.0
+offset_bottom = 27.0
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="died" from="Health" to="." method="_on_health_died"]
+[connection signal="took_damage" from="Health" to="." method="_on_health_took_damage"]
